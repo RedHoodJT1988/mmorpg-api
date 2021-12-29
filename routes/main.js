@@ -9,7 +9,6 @@ router.get("/", (req, res) => {
 
 router.get("/status", (req, res) => {
     res.status(200).json({ message: "OK", status: 200});
-    res.send('Hello world');
 });
 
 router.post("/login", (req, res) => {

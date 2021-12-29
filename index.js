@@ -4,6 +4,7 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require('body-parser');
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 const routes = require("./routes/main");
 const passwordRoutes = require("./routes/password");
@@ -17,7 +18,12 @@ const port = process.env.PORT || 3000; // set the localhost port
 // update express settings
 app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
 app.use(bodyParser.json()); // parse application/json
-app.use(cors({ credentials: true, origin: process.env.CORS_ORIGIN }))
+app.use(cookieParser());
+app.use(cors({ credentials: true, origin: process.env.CORS_ORIGIN }));
+
+// require passport auth
+require("./auth/auth");
+
 
 // setup routes
 app.use("/", routes);
