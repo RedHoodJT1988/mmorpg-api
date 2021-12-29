@@ -1,4 +1,3 @@
-const e = require("express");
 const passport = require("passport");
 const localStrategy = require("passport-local");
 
@@ -9,29 +8,28 @@ passport.use("signup", new localStrategy.Strategy({
     passReqToCallback: true,
 }, (req, email, password, done) => {
     console.log(email, password);
-    console.log(request.body);
+    console.log(req.body);
 
     const { username } = req.body;
-    if (username && username != "error") {
+    if (username && username !== "error") {
         return done(null, { name: "jon" });
     } else {
-        return done(new Error("Invalid user or password"));
+        return done(new Error("user or password not valid"));
     }
-}))
+}));
 
 
-// handle user login
+// hnadle user login
 passport.use("login", new localStrategy.Strategy({
     usernameField: "email",
     passwordField: "password",
-    passReqToCallback: true,
 }, (email, password, done) => {
     if (email !== "jon@test.com") {
         return done(new Error("user or password not valid"), false);
     }
 
     if (password !== "test") {
-        return done(new Error("user or passowrd not valid"), false);
+        return done(new Error("user or password not valid"), false);
     }
 
     return done(null, { name: "jon" });
